@@ -1,0 +1,24 @@
+{
+  "name": "pdfslayer",
+  "version": "0.1.0",
+  "description": "Dual-stack setup: TypeScript CLI + Python PDF analysis experiments",
+  "license": "MIT",
+  "private": true,
+  "bin": {
+    "pdfslayer": "dist/cli.js"
+  },
+  "scripts": {
+    "dev": "ts-node src/cli.ts",
+    "build": "tsc",
+    "start": "node dist/cli.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "openai": "^4.77.4"
+  }
+}

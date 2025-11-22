@@ -1,0 +1,161 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdfslayer"
+version = "0.1.0"
+description = "Python side of PDFSLAYER: PDF → rich JSON extraction for inference/IP engine."
+authors = [
+  { name = "Your Name", email = "you@example.com" }
+]
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary / Custom (see project docs)" }
+keywords = ["pdf", "obsidian", "hegelian", "ip-engine", "nlp"]
+
+# Minimal dependencies for your current extractor
+dependencies = [
+  "pdfplumber>=0.11.0",
+  "pypdf>=3.0.0",
+  "tqdm>=4.66.0",
+  "python-dotenv>=1.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "black",
+  "mypy",
+  "ruff"
+]
+
+[project.scripts]
+# Optional: a pure-python CLI entrypoint if you ever want to call it directly:
+pdfslayer-extract = "pdfslayer.cli:main"
+
+# ^ For this to work, you can later create pdfslayer/__init__.py and pdfslayer/cli.py
+#   that wraps python/test_parse.py. Not required yet; it's just a hook for future use.
+
+
+###############################################################
+# Jules White–Inspired LLM Behavior Contract for PDFSLAYER
+# This is purely for tools/agents (ChatGPT, Copilot, etc.).
+# It does not affect packaging but is MACHINE-READABLE.
+###############################################################
+
+[tool.pdfslayer.project]
+name = "PDFSLAYER"
+primary_language = "typescript"
+secondary_language = "python"
+platform = "windows"
+hegelian_mode = true
+description = """
+Global inference/IP engine for PDFs, chats, and structured texts. Python handles
+rich PDF extraction into JSON; TypeScript orchestrates CLI, Obsidian export, and
+LLM integration.
+"""
+
+[tool.pdfslayer.intent]
+north_star = """
+Build a global, licensing-aware inference/IP engine that ingests PDFs, chat logs,
+and structured texts, producing ASTs, InferenceGraphs, PatternGraphs, Overlaps,
+and IPObjects for an Ivy-grade educational library.
+"""
+education_access = "free_core"
+commercial_mode = "licensed_optional"
+user_friction = "minimal"
+
+[tool.pdfslayer.intent.ux]
+goal_1 = "User can run a single command (e.g., pdfslayer file.pdf) and get Obsidian notes."
+goal_2 = "Configuration errors are explained in one or two friendly lines."
+goal_3 = "Advanced flags exist, but sane defaults require no extra thinking."
+goal_4 = "APIs and keys are always handled via environment variables; keys never appear in chat."
+goal_5 = "Windows paths and Obsidian vault integration are first-class."
+
+[tool.pdfslayer.dialectic]
+enabled = true
+depth = 3
+apply_to = [
+  "feature_selection",
+  "architecture_design",
+  "knowledge_extraction",
+  "code_generation"
+]
+thesis_detection = "automatic"
+antithesis_detection = "tension_and_contradiction"
+synthesis_strategy = "raise_structure_toward_north_star"
+
+[tool.pdfslayer.source]
+holistic_memory = true
+merge_chat_and_pdf = true
+supported_types = ["pdf", "chatlog", "text"]
+chat_export_formats = ["json", "txt", "html"]
+
+[tool.pdfslayer.source.pdf]
+python_entry = "python/test_parse.py"
+rich_blocks = true
+extract_headings = true
+extract_lists = true
+emit_page_metadata = true
+
+[tool.pdfslayer.source.chatlog]
+build_chat_ast = true
+roles = ["user", "assistant", "system"]
+infer_intents = true
+
+[tool.pdfslayer.ip_engine]
+ast_models = ["PdfDocumentAST", "ChatDocumentAST"]
+inference_graph = true
+pattern_graph = true
+overlap_detection = true
+ipobject_generation = true
+licensing = true
+provenance = true
+
+[tool.pdfslayer.ip_engine.inference]
+types = ["claim", "assumption", "implication", "analogy", "tension", "openQuestion"]
+relations = ["supports", "contradicts", "refines", "parallels", "generalizes", "bridge"]
+
+[tool.pdfslayer.ip_engine.patterns]
+categories = ["existential", "psychological", "operational", "strategic", "narrative", "mythic", "technological"]
+cross_document = true
+
+[tool.pdfslayer.obsidian]
+env_var = "OBSIDI_VAULT"
+default_folder = "Notes"
+sanitize_filenames = true
+auto_open_flag = "--open"
+export_formats = ["md", "json"]
+
+[tool.pdfslayer.llm]
+enabled = true
+provider = "openai"
+model = "gpt-4o-mini"
+summarization = true
+chunking = true
+token_safe = true
+env_api_key = "OPENAI_API_KEY"
+never_request_raw_key_in_chat = true
+
+[tool.pdfslayer.agent]
+mode = "project-oracle"
+auto_propose_features = true
+auto_generate_code = true
+integrate_all_chat_content = true
+no_reset = true
+
+[tool.pdfslayer.agent.workflow]
+step_1 = "infer_intention"
+step_2 = "analyze_sources (pdf/chat/code)"
+step_3 = "detect_thesis_antithesis"
+step_4 = "propose_synthetic_features"
+step_5 = "implement_chosen_feature_in_code"
+step_6 = "update_obsidian_exports"
+step_7 = "repeat"
+
+[tool.pdfslayer.ux]
+messages_short = true
+errors_friendly = true
+config_validation = true
+print_windows_examples = true
