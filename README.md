@@ -192,3 +192,38 @@ Rules:
 
 ### When to apply the rule
 Apply this 4-variant protocol when you see phrases like “give 4 versions,” “4 options,” “run this 4 times,” “I want 4 drafts,” or requests for assessment/comparison across multiple versions. Otherwise, return a single optimized response.
+
+## Utility assessment index
+Use this rubric to quickly score how useful a plan, prompt, or code snippet is before sharing it. It is designed to be fast (≈60 seconds) and reproducible so multiple reviewers arrive at similar scores.
+
+### Dimensions (0–5 each)
+- **Clarity**: The reader can execute the instructions without guessing. 0 = confusing; 5 = crystal clear with unambiguous steps/inputs.
+- **Completeness**: Covers prerequisites, steps, and expected outputs. 0 = major gaps; 5 = nothing obvious missing for the stated scope.
+- **Actionability**: Specifies concrete actions, commands, or code. 0 = abstract advice; 5 = fully actionable with copy/paste-able snippets.
+- **Safety & compliance**: Avoids leaking secrets, respects environment constraints, and calls out risks. 0 = unsafe; 5 = clearly safe and policy-aware.
+- **Verification**: Includes ways to validate success (tests, checks, expected logs). 0 = none; 5 = explicit verification steps with pass/fail signals.
+- **Efficiency**: Minimizes unnecessary steps, favors defaults, and avoids heavyweight dependencies. 0 = wasteful; 5 = streamlined and pragmatic.
+
+### Scoring
+1) Score each dimension 0–5.
+2) Compute the **Utility Assessment Index (UAI)**: `UAI = round( (Clarity + Completeness + Actionability + Safety + Verification + Efficiency) / 6 , 2 )`.
+3) Record a short rationale (1–2 bullets) for any dimension ≤3 to guide improvements.
+
+### Quick template
+```
+Utility Assessment
+- Clarity: 4 — …
+- Completeness: 3 — …
+- Actionability: 5 — …
+- Safety & compliance: 4 — …
+- Verification: 3 — …
+- Efficiency: 4 — …
+
+UAI: 3.83 / 5
+Rationale: Fill gaps in prerequisites; add a one-line test command.
+```
+
+### Usage guidance
+- Apply the index to drafts before committing them to the README or sharing with teammates.
+- Aim for **UAI ≥ 4.0** for user-facing guides; **≥3.5** is acceptable for internal notes.
+- If time is short, score only Clarity, Actionability, and Safety; average those three for a lightweight check.
