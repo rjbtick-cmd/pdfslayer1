@@ -136,3 +136,59 @@ gcloud scheduler jobs create http run-automa \
 
 ### When you need your PC
 Only for editing code, running `gcloud run deploy`, and checking logs. All processing runs in Cloud Run on the schedule you set.
+
+## Codex multi-variant output protocol (4-variant rule)
+When you explicitly or implicitly ask Codex for **4 versions** of an item (prompt, plan, script, pipeline, spec, etc.), use this behavior template in the system prompt/profile. If no variant count is requested, default to a single optimized answer.
+
+### Global behavior rule
+- **Variants 1–3**: three **distinct** takes with different complexity levels, structure, and at least one key design decision.
+  - **Version 1 – Simple / Robust**: minimal moving parts; clear steps; few dependencies and assumptions; easy to debug or explain.
+  - **Version 2 – Intermediate / Optimized**: adds optimizations/structure; better modularization; readable advanced techniques; practical default.
+  - **Version 3 – Advanced / Experimental**: highest sophistication; advanced patterns/heuristics/automation; non-obvious choices; accepts more risk.
+- **Variant 4**: **synthesis / best-of** that merges the strongest ideas from 1–3, resolves conflicts, and removes redundancy.
+
+### Synthesis rule for Version 4
+- Evaluate 1–3 explicitly (strengths, risks, redundancies).
+- Merge only the best ideas:
+  - Keep the simplest reliable parts from V1.
+  - Keep the most useful optimizations from V2.
+  - Keep only the most justified advanced elements from V3.
+- Produce a single “optimal for now” design: clearer than V3, more powerful than V1, ready to implement and easy to benchmark against 1–3.
+
+### Required output format
+Use this outline exactly when returning 4 variants:
+
+```
+[VERSION 1 – SIMPLE / ROBUST]
+- Complexity: Low
+- Design intent: ...
+- Output: 
+  <content for version 1>
+
+[VERSION 2 – INTERMEDIATE / OPTIMIZED]
+- Complexity: Medium
+- Design intent: ...
+- Output:
+  <content for version 2>
+
+[VERSION 3 – ADVANCED / EXPERIMENTAL]
+- Complexity: High
+- Design intent: ...
+- Output:
+  <content for version 3>
+
+[VERSION 4 – SYNTHESIZED OPTIMAL]
+- How it uses V1: ...
+- How it uses V2: ...
+- How it uses V3: ...
+- Final output:
+  <synthesized best version>
+```
+
+Rules:
+- Always label each version exactly as above.
+- Always include the “Design intent” lines (1–3 sentences) for Versions 1–3.
+- In Version 4, explicitly state how each earlier version contributed (even if unused).
+
+### When to apply the rule
+Apply this 4-variant protocol when you see phrases like “give 4 versions,” “4 options,” “run this 4 times,” “I want 4 drafts,” or requests for assessment/comparison across multiple versions. Otherwise, return a single optimized response.
