@@ -93,3 +93,46 @@ print(graph.to_dict())
 
 ## Testing
 The repo is dependency-light; no test runner is wired yet. Add pytest-based tests under `tests/` for future work.
+
+## Cloud-first (hands-off) pipeline
+If you want the pipelines to run without keeping your PC on, you can deploy a small worker to Google Cloud Platform. Adapt the commands for AWS/Azure if preferred.
+
+- **Storage**: single bucket with clear prefixes (e.g., `gs://automa-datasets/raw/`, `processed/`, `embeddings/`).
+- **Secrets**: use Secret Manager for credentials (e.g., `OPENAI_API_KEY`).
+- **Compute**: one Dockerized Python worker running on Cloud Run.
+- **Automation**: Cloud Scheduler → Pub/Sub → Cloud Run job trigger every 10 minutes (or your cadence).
+
+### One-time setup commands (GCP)
+Run these from a machine with the gcloud CLI authenticated to your project:
+
+```bash
+# Storage bucket
+gcloud storage buckets create gs://automa-datasets --location=us-central1
+gcloud storage cp --recursive "C:\path\to\data" gs://automa-datasets/raw/
+
+# Secrets
+gcloud secrets create OPENAI_API_KEY --replication-policy="automatic"
+echo YOUR_KEY | gcloud secrets versions add OPENAI_API_KEY --data-file=-
+
+# Build & deploy worker (from the folder containing Dockerfile)
+gcloud builds submit --tag gcr.io/$(gcloud config get-value project)/automa-worker
+gcloud run deploy automa-worker \
+  --image gcr.io/$(gcloud config get-value project)/automa-worker \
+  --region us-central1 \
+  --set-secrets OPENAI_API_KEY=OPENAI_API_KEY:latest \
+  --allow-unauthenticated  # tighten with IAM if desired
+
+# Scheduler (every 10 minutes)
+gcloud scheduler jobs create http run-automa \
+  --schedule="*/10 * * * *" \
+  --uri="https://<your-cloud-run-url>/run-pipeline" \
+  --http-method=POST
+```
+
+### Worker outline
+- Read input blobs from `gs://automa-datasets/raw/`.
+- Call the LLM using `OPENAI_API_KEY` from Secret Manager.
+- Write results to `gs://automa-datasets/processed/` (add `embeddings/` later if needed).
+
+### When you need your PC
+Only for editing code, running `gcloud run deploy`, and checking logs. All processing runs in Cloud Run on the schedule you set.
