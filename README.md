@@ -209,6 +209,13 @@ Use this rubric to quickly score how useful a plan, prompt, or code snippet is b
 2) Compute the **Utility Assessment Index (UAI)**: `UAI = round( (Clarity + Completeness + Actionability + Safety + Verification + Efficiency) / 6 , 2 )`.
 3) Record a short rationale (1–2 bullets) for any dimension ≤3 to guide improvements.
 
+**One-minute checklist** (aim for “yes” on all):
+- Are prerequisites and inputs stated? (Clarity/Completeness)
+- Are there copy/pasteable commands or code? (Actionability)
+- Are secret-handling and safety notes explicit? (Safety & compliance)
+- Is there a quick verification step with expected outcome? (Verification)
+- Is there any obvious waste you can remove? (Efficiency)
+
 ### Quick template
 ```
 Utility Assessment
@@ -227,3 +234,14 @@ Rationale: Fill gaps in prerequisites; add a one-line test command.
 - Apply the index to drafts before committing them to the README or sharing with teammates.
 - Aim for **UAI ≥ 4.0** for user-facing guides; **≥3.5** is acceptable for internal notes.
 - If time is short, score only Clarity, Actionability, and Safety; average those three for a lightweight check.
+
+### CLI calculator (optional)
+Run the helper script to compute a score quickly:
+
+```bash
+python tools/uai_score.py \
+  --clarity 4 --completeness 3.5 --actionability 5 \
+  --safety 4 --verification 3 --efficiency 4.5
+```
+
+The script prints each dimension, the rounded UAI, and flags any dimensions at or below 3 so you can tighten the draft before sharing.
