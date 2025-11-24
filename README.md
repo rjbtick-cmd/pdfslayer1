@@ -56,6 +56,21 @@ print(graph.to_dict())
    pg.frameworks.append(Framework(name="Adoption Flywheel", steps=["Awareness","Trial","Advocacy"]))
    print(pg.to_dict())
    ```
+
+## Generate a synthetic 1000-page executive manuscript
+Use the built-in generator to create an Obsidian-friendly Markdown + JSON bundle
+that mirrors a "0.0 Executive manuscript" with categorical index mapping and
+polish guidance for high-quality PDFs.
+
+```bash
+python -m pdfslayer.manuscript_quality
+```
+
+Outputs land in `output/Notes/Obsidian_Dragon_Heart.md` and
+`output/Notes/Obsidian_Dragon_Heart.json` (folders are auto-created). The files
+include:
+- A 1000-page quality index with executive focus, inference guidance, and polish actions.
+- An "Obsidian Dragon Heart" summary with category distribution and average quality score.
    
 ## Easiest way to run (Windows, no typing)
 1) Drop PDFs into `pdfs/` (folder created at repo root).
