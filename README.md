@@ -64,5 +64,32 @@ print(graph.to_dict())
    - If not set, outputs go to `<repo>/output/Notes/`.
 3) Find `*-extract.json` and `*-extract.md` in the Notes folder.
 
+## Windows shell notes (PowerShell 7 vs. CMD)
+- The one-click `.bat` helpers run in **CMD**, but if you need to run Python/Node commands manually, open **PowerShell 7** (prompt shows `PS`). If you see `C:\...>` without `PS`, you are still in CMD.
+- Quick launch: press **Win + X → Windows PowerShell (Admin)** or run `pwsh` from Start. Confirm with `$PSVersionTable.PSVersion.Major` returning `7`.
+- Staying in CMD hides helpers such as `$env:` variables or `pm2`. Switch shells before running the commands below.
+- Example PowerShell setup for running a local orchestrator (no Docker):
+  ```powershell
+  cd C:\Users\<you>\Desktop\pdfslayer\dragon-grid
+  $env:PYTHONPATH = "$PWD"
+  $env:USE_LOCAL_WORKER = "1"
+  python -m dragon_grid.orchestrator
+  ```
+- To use Docker mode instead (PowerShell):
+  ```powershell
+  cd C:\Users\<you>\Desktop\pdfslayer\dragon-grid
+  $env:PYTHONPATH = "$PWD"
+  $env:USE_LOCAL_WORKER = ""
+  docker --version   # ensure Docker is on PATH
+  docker build -f Dockerfile.worker -t dragon-grid-worker:latest .
+  python -m dragon_grid.orchestrator
+  ```
+- Adding `pm2` to PATH from PowerShell:
+  ```powershell
+  $env:Path += ";$env:APPDATA\npm"
+  pm2 -v
+  ```
+- Reminder: the built-in `python -m http.server` replies `501` on POST; that’s expected because it only serves static files. Use the orchestrator/backend for API requests.
+
 ## Testing
 The repo is dependency-light; no test runner is wired yet. Add pytest-based tests under `tests/` for future work.
