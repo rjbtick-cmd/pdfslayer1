@@ -7,7 +7,7 @@ PDF parsing and inference graph playground. The goal is to turn PDFs into struct
   - `pdf_loader.py` — PDF ingestion and text extraction into `PdfDocument`.
   - `models.py` — PdfDocument/PdfPage/PdfTextBlock structures.
   - `inference.py` — nodes/edges for inference graphs plus JSON serialization.
-  - `patterns.py` — pattern graphs and IP object schemas.
+  - `patterns.py` — pattern graphs, frameworks, and theoretical indexing helpers.
 
 ## Quick start
 1) Install Python 3.10+.
@@ -45,6 +45,22 @@ n1 = graph.add_node(kind=NodeType.CLAIM, content="Solar adoption cuts peak load.
 n2 = graph.add_node(kind=NodeType.ASSUMPTION, content="Peak load happens mid-day.")
 graph.add_edge(src=n2.id, dst=n1.id, kind=EdgeType.SUPPORTS, rationale="Assumption supports claim.")
 print(graph.to_dict())
+```
+
+## Interweave the theoretical indexing framework
+```python
+from pdfslayer.inference import InferenceGraph, NodeType
+from pdfslayer.patterns import build_theoretical_indexing_framework, weave_theoretical_indexing
+
+graph = InferenceGraph()
+graph.add_node(NodeType.CLAIM, "Solar adoption cuts peak load.")
+graph.add_node(NodeType.ASSUMPTION, "Peak load happens mid-day.")
+graph.add_node(NodeType.IMPLICATION, "Utilities should stagger pricing signals.")
+
+framework = build_theoretical_indexing_framework()
+placement = weave_theoretical_indexing(graph)
+print(framework.to_dict())
+print({step: [node.id for node in nodes] for step, nodes in placement.items()})
 ```
 
 ## Minimal pattern/IP usage
